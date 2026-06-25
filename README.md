@@ -13,8 +13,10 @@ GetFit is a fitness and nutrition tracking platform that enables users to:
 * Track workout history and progress
 * Set and monitor short-term and long-term fitness goals
 
+```text
 The project aims to provide a centralized solution for managing both fitness and nutrition data through a scalable API-driven architecture.
 ---
+```
 ## 🚀 Features
 
 ### 🔐 Authentication
