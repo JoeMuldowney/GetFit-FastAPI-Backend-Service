@@ -8,10 +8,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+  # dummy variables
     env:
       DBUSER: testuser
-      DBPASSWORD: testpassword
+      DBPASS: testpassword
       DBHOST: localhost
       DBNAME: testdb
       DBPORT: 5432
