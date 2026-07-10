@@ -1,8 +1,6 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from sqlalchemy.testing.pickleable import User
-
 from getfit.dto.mealapi import AddMeal
 from getfit.model.meal_model import Meals
 from getfit.repository.meal_repo import MealRepository
