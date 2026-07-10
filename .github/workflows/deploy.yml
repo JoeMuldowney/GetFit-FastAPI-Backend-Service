@@ -15,6 +15,8 @@ jobs:
       DBHOST: localhost
       DBNAME: testdb
       DBPORT: 5432
+      SECRETKEY: itsasecret
+      ALGORITHM: STRAL
 
     steps:
       - uses: actions/checkout@v4
