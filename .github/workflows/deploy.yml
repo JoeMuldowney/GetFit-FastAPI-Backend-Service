@@ -9,6 +9,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      DBUSER: testuser
+      DBPASSWORD: testpassword
+      DBHOST: localhost
+      DBNAME: testdb
+      DBPORT: 5432
+
     steps:
       - uses: actions/checkout@v4
 
