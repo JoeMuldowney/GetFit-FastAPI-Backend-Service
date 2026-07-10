@@ -5,14 +5,27 @@ from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
 
 
 from datetime import datetime, timedelta, timezone
-from dotenv import load_dotenv
 
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+def get_config(name: str) -> str:
+    secret = Path(f"/run/secrets/{name}")
+    if secret.exists():
+        return secret.read_text().strip()
+
+    value = os.getenv(name)
+    if value is None:
+        raise RuntimeError(f"Missing configuration: {name}")
+
+    return value
+
+SECRET_KEY = get_config("SECRETKEY")
+ALGORITHM = get_config("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = 130
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="findmember"

@@ -1,0 +1,12 @@
+services:
+  getfit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: getfit-dev
+    restart: unless-stopped
+    container_name: GetFitService
+    ports:
+      - 8000:8000
+    volumes:
+      - ./secrets:/run/secrets:ro
