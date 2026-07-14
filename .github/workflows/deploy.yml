@@ -25,7 +25,7 @@ jobs:
       DBPASS: testpassword
       DBHOST: 127.0.0.1
       DBNAME: testdb
-      DBPORT: 5432
+      DBPORT: 3306
       SECRETKEY: itsasecret
       ALGORITHM: HS256
 
