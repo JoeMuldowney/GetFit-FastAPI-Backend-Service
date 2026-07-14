@@ -23,7 +23,7 @@ jobs:
     env:
       DBUSER: testuser
       DBPASS: testpassword
-      DBHOST: localhost
+      DBHOST: 127.0.0.1
       DBNAME: testdb
       DBPORT: 5432
       SECRETKEY: itsasecret
