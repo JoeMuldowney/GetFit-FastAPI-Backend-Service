@@ -8,7 +8,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-  # dummy variables
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testdb
+          MYSQL_USER: testuser
+          MYSQL_PASSWORD: testpassword
+        ports:
+          - 3306:3306
+
     env:
       DBUSER: testuser
       DBPASS: testpassword
@@ -16,7 +27,7 @@ jobs:
       DBNAME: testdb
       DBPORT: 5432
       SECRETKEY: itsasecret
-      ALGORITHM: STRAL
+      ALGORITHM: HS256
 
     steps:
       - uses: actions/checkout@v4
