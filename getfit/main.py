@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+from fastapi import status
 
 from .db.connection import get_db, engine, Base
 
@@ -47,7 +48,7 @@ def get_drink_service(db: Session = Depends(get_db)):
     repo = DrinkRepository(db)
     return DrinkService(repo)
 
-@app.post("/addmember", response_model=RegisterResponse)
+@app.post("/addmember", response_model=RegisterResponse, status_code=status.HTTP_201_CREATED)
 def create_member(
         person: MemberRegister,
         service: PersonService = Depends(get_service)

@@ -41,7 +41,7 @@ def test_add_member_success():
 
     response = client.post("/addmember", json=payload.model_dump())
 
-    assert response.status_code == 200
+    assert response.status_code == 201
     data = response.json()
 
     assert data["id"] == 1
