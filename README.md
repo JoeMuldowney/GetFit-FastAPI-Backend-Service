@@ -71,7 +71,7 @@ The project aims to provide a centralized solution for managing both fitness and
 
 ### Tools
 * Git
-* GitHub
+* GitHub Actions
 ---
 
 ## 📦 Installation & Setup
@@ -85,9 +85,8 @@ cd getfit
 
 ### Backend Setup
 for local dev without docker:
-  - create a mysql db and update variables in getfit/db/connection.py
-  - run "poetry run uvicorn getfit.main:app --host 0.0.0.0 --port 8000" in root
-for production
+  - create a mysql db container and update variables in getfit/db/connection.py
+  - run "poetry run uvicorn getfit.main:app --host 0.0.0.0 --port 8000" in cli from root
   - 
 
 # Coming soon

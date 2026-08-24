@@ -3,9 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: getfit-dev
+    image: fitnessapp-prodv1
     restart: unless-stopped
-    container_name: GetFitService
+    container_name: fit-backend-service
     ports:
       - 8000:8000
     volumes:

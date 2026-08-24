@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
-from getfit.model.meal_model import Meals
+from getfit.model.food_model import Foods
 
-class MealRepository:
+class FoodRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_meal(self, meal: list[Meals] ) -> bool:
+    def create_food(self, food: list[Foods] ) -> bool:
         try:
-            self.db.add_all(meal)
+            self.db.add_all(food)
             self.db.commit()
             return True
         except Exception:

@@ -4,3 +4,7 @@ __pycache__/
 .idea/
 .dockerignore
 secrets/
+terraform.tfvars
+*.tfstate
+*.tfstate.*
+ansible.cfg

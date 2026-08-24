@@ -25,7 +25,7 @@ DBPORT = get_config("DBPORT")
 DBNAME = get_config("DBNAME")
 
 
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DBUSER}:{DBPASS}@{DBHOST}:{DBPORT}/{DBNAME}"
+SQLALCHEMY_DATABASE_URL = f"postgresql+psycopg://{DBUSER}:{DBPASS}@{DBHOST}:{DBPORT}/{DBNAME}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

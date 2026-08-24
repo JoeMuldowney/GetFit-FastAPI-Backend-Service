@@ -1,28 +1,28 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from getfit.dto.mealapi import AddMeal
-from getfit.model.meal_model import Meals
-from getfit.repository.meal_repo import MealRepository
+from getfit.dto.foodlapi import AddFood
+from getfit.model.food_model import Foods
+from getfit.repository.food_repo import FoodRepository
 
 
-class MealService:
-    def __init__(self, repo: MealRepository):
+class FoodService:
+    def __init__(self, repo: FoodRepository):
         self.repo = repo
 
-    def add_a_meal(self, meal: AddMeal, user_id: int):
-        if not meal.meal_items:
-            raise ValueError('Meal items not provided')
-        total_meal =[]
-        for foodname, foodamount in meal.meal_items.items():
+    def add_a_food(self, food: AddFood, user_id: int):
+        if not food.food_items:
+            raise ValueError('fooditems not provided')
+        total_food =[]
+        for foodname, foodamount in food.food_items.items():
             if foodname.strip() == "" or foodamount <= 0:
                 continue
-            total_meal.append(
-                Meals(
+            total_food.append(
+                Foods(
                     foodname=foodname,
                     foodamount=foodamount,
                     user_id=user_id,
                     daytime=datetime.now(ZoneInfo("America/New_York"))
                 )
             )
-        return self.repo.create_meal(total_meal)
+        return self.repo.create_food(total_food)

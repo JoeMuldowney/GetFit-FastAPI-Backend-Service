@@ -7,16 +7,16 @@ from fastapi import status
 from .db.connection import get_db, engine, Base
 
 from .repository.members_repo import PersonRepository
-from .repository.meal_repo import MealRepository
+from .repository.food_repo import FoodRepository
 from .repository.drink_repo import DrinkRepository
 
 from .services.authservice import PersonService
-from .services.mealservice import MealService
+from .services.foodservice import FoodService
 from .services.drinkservice import DrinkService
 from .services.jwtservice import get_current_user, get_current_user_data
 
 from .dto.authapi import MemberRegister, RegisterResponse, PersonFind, LoginResponse, MemberResponse
-from .dto.mealapi import AddMeal
+from .dto.foodlapi import AddFood
 from .dto.drinkapi import AddDrink
 
 
@@ -32,23 +32,24 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"], # ok for dev switch for prod
+    allow_headers=["*"] # ok for dev switch for prod
 )
 
 def get_service(db: Session = Depends(get_db)):
     repo = PersonRepository(db)
     return PersonService(repo)
 
-def get_meal_service(db: Session = Depends(get_db)):
-    repo = MealRepository(db)
-    return MealService(repo)
+def get_food_service(db: Session = Depends(get_db)):
+    repo = FoodRepository(db)
+    return FoodService(repo)
 
 def get_drink_service(db: Session = Depends(get_db)):
     repo = DrinkRepository(db)
     return DrinkService(repo)
 
-@app.post("/addmember", response_model=RegisterResponse, status_code=status.HTTP_201_CREATED)
+# Register a user
+@app.post("/api/addmember", response_model=RegisterResponse, status_code=status.HTTP_201_CREATED)
 def create_member(
         person: MemberRegister,
         service: PersonService = Depends(get_service)
@@ -57,9 +58,11 @@ def create_member(
         db_person = service.register_member(person)
         return db_person
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=403, detail=str(e))
 
-@app.post("/findmember", response_model=LoginResponse)
+
+# log in a user
+@app.post("/api/findmember", response_model=LoginResponse)
 def get_person(
         person: PersonFind,
         service: PersonService = Depends(get_service)
@@ -70,18 +73,23 @@ def get_person(
     except ValueError as e:
         raise HTTPException(status_code=401, detail=str(e))
 
-@app.post("/meal")
-def add_meal(
-        meal: AddMeal,
+# verify user
+@app.get("/api/me", response_model=MemberResponse)
+def get_me(user = Depends(get_current_user_data)):
+    return user
+
+@app.post("/api/food")
+def add_food(
+        food: AddFood,
         user_id: int = Depends(get_current_user),
-        service: MealService = Depends(get_meal_service)
+        service: FoodService = Depends(get_food_service)
 ):
     try:
-        return service.add_a_meal(meal, user_id)
+        return service.add_a_food(food, user_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.post("/drink")
+@app.post("/api/drink")
 def add_drink(
         drink: AddDrink,
         service: DrinkService = Depends(get_drink_service)
@@ -91,6 +99,6 @@ def add_drink(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@app.get("/me", response_model=MemberResponse)
-def get_me(user = Depends(get_current_user_data)):
-    return user
+@app.post("/api/daily_nutrition_intake")
+def daily_nutrition_intake():
+    pass
