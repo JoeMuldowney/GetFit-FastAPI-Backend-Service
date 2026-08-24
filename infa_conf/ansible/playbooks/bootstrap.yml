@@ -1,0 +1,40 @@
+- name: Bootstrap Droplet VM
+  hosts: getfit
+  become: true
+
+  tasks:
+    - name: Update package metadata
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install common packages
+      ansible.builtin.apt:
+        name:
+          - git
+          - vim
+          - htop
+          - curl
+          - wget
+        state: present
+
+    - name: Ensure SSH service is enabled
+      ansible.builtin.systemd:
+        name: ssh
+        enabled: true
+        state: started
+
+
+- name: Configure Docker
+  hosts: getfit
+  become: true
+
+  roles:
+    - docker
+
+- name: Configure NGINX
+  hosts: getfit
+  become: true
+
+  roles:
+    - nginx

@@ -1,0 +1,33 @@
+- name: Install NGINX
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: true
+
+- name: Ensure NGINX is started and enabled
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Install NGINX configuration
+  ansible.builtin.template:
+    src: forgevitahq.conf.j2
+    dest: /etc/nginx/sites-available/forgevitahq
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart NGINX
+
+- name: Enable ForgeVitaHQ NGINX configuration
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/forgevitahq
+    dest: /etc/nginx/sites-enabled/forgevitahq
+    state: link
+  notify: Restart NGINX
+
+- name: Remove default NGINX site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Restart NGINX
