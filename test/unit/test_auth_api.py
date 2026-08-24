@@ -39,7 +39,7 @@ def test_add_member_success():
         email="john@test.com"
     )
 
-    response = client.post("/addmember", json=payload.model_dump())
+    response = client.post("/api/addmember", json=payload.model_dump())
 
     assert response.status_code == 201
     data = response.json()
@@ -72,9 +72,9 @@ def test_add_member_failure():
         email="john@test.com"
     )
 
-    response = client.post("/addmember", json=payload.model_dump())
+    response = client.post("/api/addmember", json=payload.model_dump())
 
-    assert response.status_code == 400
+    assert response.status_code == 403
     assert response.json()["detail"] == "User already exists"
 
     app.dependency_overrides.clear()
@@ -100,7 +100,7 @@ def test_find_member_success():
         password="secret"
     )
 
-    response = client.post("/findmember", json=payload.model_dump())
+    response = client.post("/api/findmember", json=payload.model_dump())
 
     assert response.status_code == 200
     data = response.json()
@@ -128,9 +128,9 @@ def test_find_member_failure():
         password="wrongpass"
     )
 
-    response = client.post("/findmember", json=payload.model_dump())
+    response = client.post("/api/findmember", json=payload.model_dump())
 
-    assert response.status_code == 401
+    assert response.status_code == 403
     assert response.json()["detail"] == "Invalid credentials"
 
     app.dependency_overrides.clear()
@@ -147,7 +147,7 @@ def test_get_me():
         "lname": "Doe"
     }
 
-    response = client.get("/me")
+    response = client.get("/api/me")
 
     assert response.status_code == 200
     data = response.json()

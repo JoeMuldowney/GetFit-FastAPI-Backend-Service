@@ -1,7 +1,7 @@
 def test_register_user_success(client):
 
     response = client.post(
-        "/addmember",
+        "/api/addmember",
         json={
             "username": "john123",
             "password": "secret",
@@ -18,7 +18,7 @@ def test_register_user_success(client):
 def test_register_user_fail(client):
 
     response = client.post(
-        "/addmember",
+        "/api/addmember",
         json={
             "username": "john123",
             "password": "secret",
@@ -30,12 +30,12 @@ def test_register_user_fail(client):
     )
     print(response.json())
 
-    assert response.status_code == 401
+    assert response.status_code == 403
 
 def test_find_user_success(client):
 
     response = client.post(
-        "/findmember",
+        "/api/findmember",
         json={
             "username": "john123",
             "password": "secret"
@@ -48,7 +48,7 @@ def test_find_user_success(client):
 def test_find_user_success_fail_password(client):
 
     response = client.post(
-        "/findmember",
+        "/api/findmember",
         json={
             "username": "john123",
             "password": "secret1"

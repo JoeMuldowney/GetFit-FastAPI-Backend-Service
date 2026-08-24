@@ -71,7 +71,7 @@ def get_person(
     try:
         return service.get_person_by_auth(person)
     except ValueError as e:
-        raise HTTPException(status_code=401, detail=str(e))
+        raise HTTPException(status_code=403, detail=str(e))
 
 # verify user
 @app.get("/api/me", response_model=MemberResponse)
