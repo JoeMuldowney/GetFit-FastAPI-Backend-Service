@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: prod
     image: fitnessapp-prodv1
     restart: unless-stopped
     container_name: fit-backend-service

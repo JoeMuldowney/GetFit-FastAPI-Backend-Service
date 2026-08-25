@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+
+    container_name: getfit-backend-dev
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./getfit:/app/getfit
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
