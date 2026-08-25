@@ -27,6 +27,7 @@ app = FastAPI()
 origins = [
     # "http://localhost:5173",   # Local development
     "https://forgevitahq.com", # Production frontend
+    "https://www.forgevitahq.com",
 ]
 app.add_middleware(
     CORSMiddleware,
