@@ -25,15 +25,15 @@ app = FastAPI()
 
 # CORS setup
 origins = [
-    "http://localhost:5173",  # Vite React frontend
+    # "http://localhost:5173",   # Local development
+    "https://forgevitahq.com", # Production frontend
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"], # ok for dev switch for prod
-    allow_headers=["*"] # ok for dev switch for prod
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 def get_service(db: Session = Depends(get_db)):
