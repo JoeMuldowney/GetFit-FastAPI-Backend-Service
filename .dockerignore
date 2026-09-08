@@ -13,3 +13,5 @@ terraform.tfvars
 inventory.ini
 infa_conf/
 ansible.cfg
+group_vars/
+*.zip
