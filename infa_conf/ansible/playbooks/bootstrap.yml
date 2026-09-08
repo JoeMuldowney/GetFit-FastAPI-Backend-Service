@@ -16,6 +16,7 @@
           - htop
           - curl
           - wget
+          - unzip
         state: present
 
     - name: Ensure SSH service is enabled

@@ -1,0 +1,12 @@
+- name: Bootstrap Droplet VM
+  hosts: getfit
+  become: true
+
+  tasks:
+    - name: Update package metadata
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+  roles:
+    - sonarqube
