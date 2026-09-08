@@ -1,0 +1,25 @@
+- name: Configure SonarQube
+  ansible.builtin.template:
+    src: sonar.properties.j2
+    dest: "{{ sonarqube_install_dir }}/conf/sonar.properties"
+    owner: "{{ sonarqube_user }}"
+    group: "{{ sonarqube_group }}"
+    mode: "0640"
+  notify: Restart SonarQube
+
+- name: Install SonarQube systemd service
+  ansible.builtin.template:
+    src: sonarqube.service.j2
+    dest: /etc/systemd/system/sonarqube.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart SonarQube
+
+- name: Start SonarQube
+  ansible.builtin.service:
+    name: sonarqube
+    state: started
+    enabled: true

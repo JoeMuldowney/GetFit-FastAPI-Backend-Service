@@ -1,0 +1,49 @@
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - openjdk-21-jdk
+      - unzip
+    state: present
+    update_cache: true
+
+- name: Create SonarQube group
+  ansible.builtin.group:
+    name: "{{ sonarqube_group }}"
+    state: present
+
+- name: Create SonarQube user
+  ansible.builtin.user:
+    name: "{{ sonarqube_user }}"
+    group: "{{ sonarqube_group }}"
+    system: true
+    create_home: false
+
+- name: Copy SonarQube distribution
+  ansible.builtin.copy:
+    src: "sonarqube-{{ sonarqube_version }}.zip"
+    dest: "/tmp/sonarqube-{{ sonarqube_version }}.zip"
+    mode: "0644"
+
+- name: Extract SonarQube
+  ansible.builtin.unarchive:
+    src: "/tmp/sonarqube-{{ sonarqube_version }}.zip"
+    dest: /opt
+    remote_src: true
+
+- name: Move SonarQube to installation directory
+  ansible.builtin.command:
+    cmd: "mv /opt/sonarqube-{{ sonarqube_version }} {{ sonarqube_install_dir }}"
+    creates: "{{ sonarqube_install_dir }}"
+
+- name: Set SonarQube ownership
+  ansible.builtin.file:
+    path: "{{ sonarqube_install_dir }}"
+    owner: "{{ sonarqube_user }}"
+    group: "{{ sonarqube_group }}"
+    recurse: true
+
+- name: Make SonarQube scripts executable
+  ansible.builtin.file:
+    path: "{{ sonarqube_install_dir }}/bin/linux-x86-64"
+    mode: "0755"
+    recurse: true

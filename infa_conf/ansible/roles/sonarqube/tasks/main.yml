@@ -1,0 +1,5 @@
+- name: Install SonarQube
+  ansible.builtin.import_tasks: install.yml
+
+- name: Configure SonarQube
+  ansible.builtin.import_tasks: configure.yml
