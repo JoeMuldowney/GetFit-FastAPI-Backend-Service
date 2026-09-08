@@ -54,8 +54,21 @@ jobs:
       - name: Test
         run: poetry run pytest
 
-  deploy:
+  sonar:
     needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  deploy:
+    needs: sonar
     runs-on: ubuntu-latest
 
     steps:

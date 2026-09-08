@@ -8,3 +8,5 @@ terraform.tfvars
 *.tfstate
 *.tfstate.*
 ansible.cfg
+group_vars/
+*.zip

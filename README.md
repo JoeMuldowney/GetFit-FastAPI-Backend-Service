@@ -88,7 +88,8 @@ for local dev without docker:
   - create a mysql db container and update variables in getfit/db/connection.py
   - run "poetry run uvicorn getfit.main:app --host 0.0.0.0 --port 8000" in cli from root
   - 
-
+for local dev with docker
+  - docker compose -f docker-compose.dev.yml up -d --build
 # Coming soon
 
 ### Frontend Setup
