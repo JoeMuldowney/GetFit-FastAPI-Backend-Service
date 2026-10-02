@@ -52,14 +52,28 @@ jobs:
         run: poetry run ruff check .
 
       - name: Test
-        run: poetry run pytest
+        run: poetry run pytest --junitxml=test-results.xml --cov=getfit --cov-report=xml
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test-results.xml
+            coverage.xml
 
   sonar:
     needs: test
     runs-on: ubuntu-latest
 
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          name: test-results
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
